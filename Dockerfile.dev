@@ -1,0 +1,13 @@
+FROM node:16-alpine
+# Create a node user to execute commands instead of the default root
+USER node
+# User node create the directory
+RUN mkdir -p /home/node/app
+WORKDIR '/home/node/app'
+# Copy files and change the ownership to node:node
+COPY --chown=node:node ./package.json ./
+RUN npm install
+# Copy files and change the ownership to node:node
+COPY --chown=node:node ./ ./
+# User node run the commands
+CMD ["npm", "run", "start"]
